@@ -1,0 +1,68 @@
+R1 gare
+209.165.100.1/24
+shida
+192.168.1.1
+R2 209.165.100.2
+marjvena 209.165.200.2
+
+R3
+shida
+192.168.3.1
+gare
+209.165.200.1
+
+
+R1
+access list 100 permit ip 192.168.3.0 0.0.0.255 192.168.1.0 0.0.0.255
+R2 
+access list 100 permit ip 192.168.3.0 0.0.0.255 192.168.1.0 0.0.0.255
+
+
+
+R1
+Crypto isamp policy 10
+encryption aes 256
+authentication pre-share
+group 5
+
+
+R3
+Crypto isamp policy 10
+encryption aes 256
+authentication pre-share
+group 5
+
+
+R1
+crypto isamp key secretkey address 209.165.200.1
+
+R3
+crypto isamp key secretkey address 209.165.200.1
+
+R1
+Crypto IPsec trnsform-ser სახელი esp-aes 256 esp-sha-hmac
+
+
+r3
+Crypto IPsec trnsform-ser სახელი esp-aes 256 esp-sha-hmac
+
+R1
+crypto map სახელი 10 ipsec-isamp
+set peer 209.165.200.1
+set pfs group5
+set security-association lifetime seconds 86400
+set transfor-set რაც შევქმენით
+match address 100 (ეს აქსეს ლისტის ნომერია)
+
+int gi გარე
+crypto maf მაპის სახელი
+
+მეორეზეც იგივე
+
+
+
+
+
+
+
+
